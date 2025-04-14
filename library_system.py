@@ -3,9 +3,26 @@ class Book:
         self.title = title
         self.author = author
         self.year = year
+        self.is_borrowed = False
 
     def __str__(self):
         return f"'{self.title}' by {self.author} ({self.year})"
+    
+    # In Book class
+
+    def borrow(self):
+        if self.is_borrowed:
+            print(f"{self.title} is already borrowed.")
+        else:
+            self.is_borrowed = True
+            print(f"You have borrowed '{self.title}'.")
+
+    def return_book(self):
+        if not self.is_borrowed:
+            print(f"{self.title} wasn't borrowed.")
+        else:
+            self.is_borrowed = False
+            print(f"You have returned '{self.title}'.")
 
 class Library:
     def __init__(self):
@@ -40,6 +57,13 @@ class Library:
         else:
             print(f"No books by '{author}' found.")
 
+    def borrow_book(self, title):
+        for book in self.books:
+            if book.title.lower() == title.lower():
+               book.borrow()
+               return
+        print("Book not found.")
+
 # Test your classes
 library = Library()
 
@@ -54,4 +78,9 @@ library.add_book(book3)
 library.list_books()
 library.search_by_author("Chimamanda")
 library.remove_book("The Alchemist")
+library.list_books()
+
+library.borrow_book("Born a Crime")
+library.borrow_book("Born a Crime")  # Try borrowing it again
+book1.return_book()
 library.list_books()
