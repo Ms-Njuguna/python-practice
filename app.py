@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 
@@ -34,11 +34,16 @@ def greet(name):
 def feedback():
     return render_template('feedback.html')
 
-@app.route('/submit-feedback', methods=['POST'])
-def submit_feedback():
-    user = request.form['username']
-    comment = request.form['comment']
-    return render_template('thankyou.html', user=user, comment=comment)
+@app.route('/submit', methods=['POST'])
+def submit():
+    name = request.form.get('name')
+    message = request.form.get('message')
+
+    if not name or not message:
+        flash("Please fill in both your name and a message.")
+        return redirect(url_for('home'))
+
+    return render_template('response.html', name=name, message=message)
 
 if __name__ == '__main__':
     app.run(debug=True)

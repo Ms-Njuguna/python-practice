@@ -38,5 +38,21 @@
          {% endfor %}
      </ul>
      <p><a href="/feedback">Leave Feedback</a></p>
+     {% with messages = get_flashed_messages() %}
+         {% if messages %}
+             <ul style="color: red;">
+                 {% for message in messages %}
+                     <li>{{ message }}</li>
+                 {% endfor %}
+             </ul>
+         {% endif %}
+     {% endwith %}
+    
+     <h2>Leave Us a Message</h2>
+     <form action="/submit" method="POST">
+         <input type="text" name="name" placeholder="Your Name"><br><br>
+         <textarea name="message" placeholder="Your Message"></textarea><br><br>
+         <button type="submit">Send</button>
+     </form>
  </body>
 </html>
