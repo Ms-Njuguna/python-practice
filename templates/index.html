@@ -22,5 +22,21 @@
  <body>
      <h1>Hi, {{ user_name }}! ✨</h1>
      <p>This is your first rendered HTML page using Flask!</p>
+     <h1>Book List</h1>
+    
+     <h2>Books:</h2>
+     <ul>
+         {% for book in books %}
+             <li>{{ book }}</li>
+         {% endfor %}
+     </ul>
+    
+     <h2>Book Details:</h2>
+     <ul>
+         {% for book, details in book_details.items() %}
+             <li><strong>{{ book }}</strong>: Author: {{ details['author'] }}, Year: {{ details['year'] }}</li>
+         {% endfor %}
+     </ul>
+     <p><a href="/feedback">Leave Feedback</a></p>
  </body>
 </html>
