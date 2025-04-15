@@ -43,7 +43,20 @@ def submit():
         flash("Please fill in both your name and a message.")
         return redirect(url_for('home'))
 
+    # ✅ Save the feedback to a file
+    with open("feedback.txt", "a") as f:
+        f.write(f"Name: {name}\nMessage: {message}\n---\n")
+
     return render_template('response.html', name=name, message=message)
+
+@app.route('/feedbacks')
+def feedbacks():
+    # Read all feedback from the file
+    feedback_list = []
+    with open("feedback.txt", "r") as f:
+        feedback_list = f.readlines()
+
+    return render_template('feedbacks.html', feedback_list=feedback_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
