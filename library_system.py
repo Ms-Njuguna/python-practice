@@ -64,6 +64,36 @@ class Library:
                return
         print("Book not found.")
 
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.borrowed_books = []
+
+    def borrow_book(self, library, title):
+        for book in library.books:
+            if book.title.lower() == title.lower() and not book.is_borrowed:
+                book.borrow()
+                self.borrowed_books.append(book)
+                return
+        print(f"{title} is not available to borrow.")
+
+    def return_book(self, library, title):
+        for book in self.borrowed_books:
+            if book.title.lower() == title.lower():
+                book.return_book()
+                self.borrowed_books.remove(book)
+                return
+        print(f"{self.name} hasn't borrowed {title}.")
+
+    def list_borrowed_books(self):
+        if not self.borrowed_books:
+            print(f"{self.name} hasn't borrowed any books.")
+        else:
+            print(f"{self.name} has borrowed:")
+            for book in self.borrowed_books:
+                print(f" - {book}")
+
+
 # Test your classes
 library = Library()
 
@@ -83,4 +113,17 @@ library.list_books()
 library.borrow_book("Born a Crime")
 library.borrow_book("Born a Crime")  # Try borrowing it again
 book1.return_book()
+library.list_books()
+
+# Create a User
+user1 = User("Patricia")
+
+# User borrows a book
+user1.borrow_book(library, "Born a Crime")
+user1.list_borrowed_books()
+library.list_books()
+
+# User returns the book
+user1.return_book(library, "Born a Crime")
+user1.list_borrowed_books()
 library.list_books()
